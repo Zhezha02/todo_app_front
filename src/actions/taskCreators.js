@@ -1,9 +1,9 @@
 import ACTION_TYPES from './actionTypes';
 
 //create task
-export const createTaskRequest = ({ values }) => ({
+export const createTaskRequest = ({ task }) => ({
   type: ACTION_TYPES.CREATE_TASK_REQUEST,
-  payload: { values },
+  payload: { task },
 });
 
 export const createTaskSuccess = ({ task }) => ({
@@ -12,7 +12,7 @@ export const createTaskSuccess = ({ task }) => ({
 });
 
 export const createTaskError = ({ error }) => ({
-  type: ACTION_TYPES.CREATE_TASK_REQUEST,
+  type: ACTION_TYPES.CREATE_TASK_ERROR,
   payload: { error },
 });
 

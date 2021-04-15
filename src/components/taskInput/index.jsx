@@ -6,11 +6,11 @@ import * as TaskActionCreators from '../../actions/taskCreators';
 const TaskInput = props => {
   const { createTaskAction, ...rest } = props;
 
-  const onSubmit = (values, formikBag) => {
-    createTaskAction(values);
+  const onSubmit = (value, formikBag) => {
+    createTaskAction({ task: value });
     formikBag.resetForm();
   };
-  
+
   return (
     <>
       <Formik
@@ -31,8 +31,8 @@ const TaskInput = props => {
 };
 
 const mapDispatchToProps = dispatch => ({
-  createTaskAction: values =>
-    dispatch(TaskActionCreators.createTaskRequest(values)),
+  createTaskAction: ({ task }) =>
+    dispatch(TaskActionCreators.createTaskRequest({ task })),
 });
 const mapStateToProps = ({ task }) => task;
 

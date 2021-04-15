@@ -4,11 +4,9 @@ import * as TaskActionCreators from '../actions/taskCreators';
 
 export function * createTaskSaga (action) {
   try {
-    console.log('start create task');
     const {
-      data: { data: [task] },
-    } = yield API.createTask(action.values);
-    console.log('send create task req');
+      data: { data: task },
+    } = yield API.createTask(action.payload);
 
     yield put(TaskActionCreators.createTaskSuccess({ task }));
   } catch (error) {
