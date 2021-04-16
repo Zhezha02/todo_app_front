@@ -54,13 +54,26 @@ export const deleteTaskRequest = ({ id }) => ({
   payload: { id },
 });
 
-//??? values?
-export const deleteTaskSuccess = ({ values }) => ({
+export const deleteTaskSuccess = ({ id }) => ({
   type: ACTION_TYPES.DELETE_TASK_SUCCESS,
-  payload: { values },
+  payload: { id },
 });
 
 export const deleteTaskError = ({ error }) => ({
   type: ACTION_TYPES.DELETE_TASK_ERROR,
+  payload: { error },
+});
+
+//delete tasks 
+export const deleteTasksRequest = () => ({
+  type: ACTION_TYPES.DELETE_TASKS_REQUEST,
+});
+
+export const deleteTasksSuccess = () => ({
+  type: ACTION_TYPES.DELETE_TASKS_SUCCESS,
+});
+
+export const deleteTasksError = ({ error }) => ({
+  type: ACTION_TYPES.DELETE_TASKS_ERROR,
   payload: { error },
 });
