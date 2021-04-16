@@ -1,0 +1,31 @@
+.wrapper {
+  min-height: 100vh;
+  background: rgb(255, 92, 127);
+  background: linear-gradient(
+    0deg,
+    rgba(255, 92, 127, 1) 0%,
+    rgba(255, 74, 78, 1) 100%
+  );
+}
+
+.container {
+  padding: 10px;
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+
+  & > * {
+    margin-bottom: 15px;
+  }
+}
+
+.heading {
+  padding: 20px;
+  text-align: center;
+  color: white;
+  text-transform: uppercase;
+  font-size: 1.5rem;
+  font-weight: bold;
+}

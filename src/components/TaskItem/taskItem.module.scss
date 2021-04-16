@@ -1,0 +1,46 @@
+.wrapper {
+  width: 100%;
+  padding: 5px 0;
+  border-bottom: 1px solid #73b4ff;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  & > button {
+    visibility: hidden;
+  }
+
+  &:hover {
+    & > button {
+      visibility: visible;
+    }
+  }
+}
+
+.taskContainer {
+  line-height: 1rem;
+  flex-grow: 1;
+}
+
+.deleteBtn {
+  height: 1rem;
+  padding: 0;
+  border: none;
+  background-color: inherit;
+  cursor: pointer;
+
+  & > img {
+    display: block;
+    height: 100%;
+  }
+}
+
+.taskValue {
+  color: #768c8c;
+}
+
+.fulfilledTask {
+  text-decoration-line: line-through;
+  color: #ff6060;
+}

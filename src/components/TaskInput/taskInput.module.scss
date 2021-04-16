@@ -1,0 +1,26 @@
+.container {
+  max-width: 100%;
+  width: 100%;
+  background-color: white;
+}
+
+.inputContainer {
+  display: flex;
+}
+
+.input {
+  flex-grow: 1;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  font-size: 1rem;
+}
+
+.submitBtn {
+  border: none;
+  font-size: 1rem;
+  background-color: inherit;
+  color: #67aeff;
+  font-weight: bold;
+  cursor: pointer;
+}
