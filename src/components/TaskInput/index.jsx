@@ -2,7 +2,7 @@ import { Formik, Form, Field } from 'formik';
 import { connect } from 'react-redux';
 import * as TaskActionCreators from '../../actions/taskCreators';
 import styles from './taskInput.module.scss';
-// import { TO_DO_INPUT_SCHEMA } from '../../utils/validationSchemas';
+import { TO_DO_INPUT_SCHEMA } from '../../utils/validationSchemas';
 
 const TaskInput = props => {
   const { createTaskAction } = props;
@@ -16,7 +16,7 @@ const TaskInput = props => {
     <>
       <Formik
         onSubmit={onSubmit}
-        // validationSchema={TO_DO_INPUT_SCHEMA}
+        validationSchema={TO_DO_INPUT_SCHEMA}
         initialValues={{
           body: '',
         }}
