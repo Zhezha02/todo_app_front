@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 import * as TaskCreators from '../../actions/taskCreators';
 import TaskItem from '../TaskItem';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './toDoList.module.scss';
 
 const ToDoList = props => {
@@ -13,21 +13,38 @@ const ToDoList = props => {
     error,
   } = props;
 
+  const [isOpenedList, setIsOpenedList] = useState(false);
+
+  const switchListState = () => setIsOpenedList(!isOpenedList);
+
   useEffect(() => {
     const loadTask = () => getTasksRequest({ offset: 0 });
     loadTask();
   }, []);
 
-  const tasksItemList = tasks.map(task => {
-    return <TaskItem key={task.id} id={task.id} task={task} />;
-  });
-
+  const openTasksItemList = tasks
+    .filter(task => task.isDone === false)
+    .map(task => {
+      return <TaskItem key={task.id} id={task.id} task={task} />;
+    });
+  const complidetTasksItemLish = tasks
+    .filter(task => task.isDone === true)
+    .map(task => {
+      return <TaskItem key={task.id} id={task.id} task={task} />;
+    });
   return (
     <>
       {tasks.length !== 0 && (
         <div className={styles.container}>
-          <ul>{tasksItemList}</ul>
-
+          <ul>{openTasksItemList}</ul>
+          {isOpenedList ? (
+            <h1 className={styles.completedTitle} onClick={switchListState}>Show complited tasks ▼ </h1>
+          ) : (
+            <section>
+              <h1 className={styles.completedTitle} onClick={switchListState}>Hide complited tasks ▼ </h1>
+              <ul>{complidetTasksItemLish}</ul>
+            </section>
+          )}
           <button className={styles.clearButton} onClick={deleteTasksAction}>
             Clear
           </button>
