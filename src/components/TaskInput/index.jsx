@@ -7,8 +7,10 @@ import { TO_DO_INPUT_SCHEMA } from '../../utils/validationSchemas';
 const TaskInput = props => {
   const { createTaskAction } = props;
 
-  const onSubmit = (value, formikBag) => {
-    createTaskAction({ task: value });
+  const onSubmit = ({ body }, formikBag) => {
+    const trimValue = body.trim();
+
+    createTaskAction({ task: { body: trimValue } });
     formikBag.resetForm();
   };
 
