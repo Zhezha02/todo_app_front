@@ -1,21 +1,18 @@
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { useEffect } from 'react';
 import * as TaskCreators from '../../actions/taskCreators';
 import TaskItem from '../TaskItem';
-import React, { useEffect, useState } from 'react';
+import TasksList from './completedTaskList';
 import styles from './toDoList.module.scss';
 
-const ToDoList = props => {
-  const {
-    getTasksRequest,
-    deleteTasksAction,
-    tasks,
-    isFetching,
-    error,
-  } = props;
-
-  const [isOpenedList, setIsOpenedList] = useState(false);
-
-  const switchListState = () => setIsOpenedList(!isOpenedList);
+const ToDoList = () => {
+  const { tasks, isFetching, error } = useSelector(({ task }) => task);
+  const dispatch = useDispatch();
+  const { deleteTasksRequest, getTasksRequest } = bindActionCreators(
+    TaskCreators,
+    dispatch
+  );
 
   useEffect(() => {
     const loadTask = () => getTasksRequest({ offset: 0 });
@@ -27,25 +24,20 @@ const ToDoList = props => {
     .map(task => {
       return <TaskItem key={task.id} id={task.id} task={task} />;
     });
-  const complidetTasksItemLish = tasks
+
+  const complitedTasksItemList = tasks
     .filter(task => task.isDone === true)
     .map(task => {
       return <TaskItem key={task.id} id={task.id} task={task} />;
     });
+
   return (
     <>
       {tasks.length !== 0 && (
         <div className={styles.container}>
           <ul>{openTasksItemList}</ul>
-          {isOpenedList ? (
-            <h1 className={styles.completedTitle} onClick={switchListState}>Show complited tasks ▼ </h1>
-          ) : (
-            <section>
-              <h1 className={styles.completedTitle} onClick={switchListState}>Hide complited tasks ▼ </h1>
-              <ul>{complidetTasksItemLish}</ul>
-            </section>
-          )}
-          <button className={styles.clearButton} onClick={deleteTasksAction}>
+          <TasksList>{complitedTasksItemList}</TasksList>
+          <button className={styles.clearButton} onClick={deleteTasksRequest}>
             Clear
           </button>
         </div>
@@ -56,12 +48,4 @@ const ToDoList = props => {
   );
 };
 
-const mapStateToProps = ({ task }) => task;
-
-const mapDispatchToProps = dispatch => ({
-  deleteTasksAction: () => dispatch(TaskCreators.deleteTasksRequest()),
-  getTasksRequest: ({ limit, offset } = {}) =>
-    dispatch(TaskCreators.getTasksRequest({ offset, limit })),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(ToDoList);
+export default ToDoList;

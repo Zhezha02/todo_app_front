@@ -1,16 +1,18 @@
 import { Formik, Form, Field } from 'formik';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import * as TaskActionCreators from '../../actions/taskCreators';
 import styles from './taskInput.module.scss';
 import { TO_DO_INPUT_SCHEMA } from '../../utils/validationSchemas';
 
 const TaskInput = props => {
-  const { createTaskAction } = props;
+  const dispatch = useDispatch();
 
   const onSubmit = ({ body }, formikBag) => {
     const trimValue = body.trim();
 
-    createTaskAction({ task: { body: trimValue } });
+    dispatch(
+      TaskActionCreators.createTaskRequest({ task: { body: trimValue } })
+    );
     formikBag.resetForm();
   };
 
@@ -40,9 +42,4 @@ const TaskInput = props => {
   );
 };
 
-const mapDispatchToProps = dispatch => ({
-  createTaskAction: ({ task }) =>
-    dispatch(TaskActionCreators.createTaskRequest({ task })),
-});
-
-export default connect(null, mapDispatchToProps)(TaskInput);
+export default TaskInput;

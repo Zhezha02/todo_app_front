@@ -1,19 +1,24 @@
-import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { useDispatch } from 'react-redux';
 import * as TaskCreators from '../../actions/taskCreators';
 import cx from 'classnames';
 import trashCan from './trash-can-outline.svg';
 import styles from './taskItem.module.scss';
 
 const TaskItem = props => {
+  const dispatch = useDispatch();
+  const { deleteTaskRequest, updateTaskRequest } = bindActionCreators(
+    TaskCreators,
+    dispatch
+  );
+
   const {
     id,
     task: { isDone, body },
-    updateTaskAction,
-    deleteTaskAction,
   } = props;
 
-  const checkboxHandler = checked => {
-    updateTaskAction({ id, values: { isDone: checked, body } });
+  const checkboxHandler = ({ target: { checked } }) => {
+    updateTaskRequest({ id, values: { isDone: checked, body } });
   };
 
   const taskClasses = cx(styles.taskValue, { [styles.fulfilledTask]: isDone });
@@ -24,23 +29,18 @@ const TaskItem = props => {
         <input
           type='checkbox'
           checked={isDone}
-          onChange={({ target: { checked } }) => {
-            checkboxHandler(checked);
-          }}
+          onChange={e => checkboxHandler(e)}
         />
         <span className={taskClasses}>{body}</span>
       </label>
-      <button className={styles.deleteBtn} onClick={() => deleteTaskAction(id)}>
+      <button
+        className={styles.deleteBtn}
+        onClick={() => deleteTaskRequest({ id })}
+      >
         <img src={trashCan} alt='delete icon' />
       </button>
     </li>
   );
 };
 
-const mapDispatchToProps = dispatch => ({
-  deleteTaskAction: id => dispatch(TaskCreators.deleteTaskRequest({ id })),
-  updateTaskAction: ({ id, values }) =>
-    dispatch(TaskCreators.updateTaskRequest({ id, values })),
-});
-
-export default connect(null, mapDispatchToProps)(TaskItem);
+export default TaskItem;
